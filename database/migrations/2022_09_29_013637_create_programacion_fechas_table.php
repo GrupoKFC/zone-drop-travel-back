@@ -17,6 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->date('fecha');
             $table->boolean('estado');
+            $table->string('observacion', 1000)->nullable();
             $table->integer('tour_id')->unsigned();
             $table->foreign('tour_id')->references('id')->on("tours");
             $table->timestamps();

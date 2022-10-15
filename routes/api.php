@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\LugaresSalidasController;
 use App\Http\Controllers\ServiciosController;
+use App\Http\Controllers\TipoAcompanantesController;
+use App\Http\Controllers\ToursController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +23,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/servicios/listado/{limit}',  [ServiciosController::class, 'listado']);
+Route::resource('tipoacompanante', TipoAcompanantesController::class);
+Route::resource('lugaressalidas', LugaresSalidasController::class);
+
+
+Route::resource('tour', ToursController::class);
+Route::get('/tour/listado/tabla/',  [ToursController::class, 'listado']);

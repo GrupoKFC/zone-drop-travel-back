@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\TipoAcompanantes;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class TipoAcompanantesController extends Controller
      */
     public function index()
     {
-        //
+
+        return TipoAcompanantes::all();
     }
 
     /**
@@ -46,7 +48,7 @@ class TipoAcompanantesController extends Controller
      */
     public function show(TipoAcompanantes $tipoAcompanantes)
     {
-        //
+        return ["dato" => "ok"];
     }
 
     /**

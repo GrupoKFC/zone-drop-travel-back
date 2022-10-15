@@ -12,5 +12,5 @@ class ProgramacionFechas extends Model
     use SoftDeletes;
     protected $table = 'programacion_fechas';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['fecha', 'estado', 'tour_id'];
+    protected $fillable = ['fecha', 'estado', 'tour_id', "observacion"];
 }

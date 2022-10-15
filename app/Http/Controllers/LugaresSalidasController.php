@@ -14,7 +14,7 @@ class LugaresSalidasController extends Controller
      */
     public function index()
     {
-        //
+        return LugaresSalidas::all();
     }
 
     /**

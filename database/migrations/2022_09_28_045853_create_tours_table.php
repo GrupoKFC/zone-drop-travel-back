@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('imagen', 1000)->nullable();
             $table->string('incluye', 5000)->nullable();
             $table->string('noIncluye', 5000)->nullable();
+            $table->string('informacionAdicional', 3000)->nullable();
             $table->boolean('estado');
             $table->timestamps();
             $table->softDeletes();
