@@ -4,9 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\LugarSalidaTour;
 use Illuminate\Http\Request;
+use Exception;
 
 class LugarSalidaTourController extends Controller
 {
+
+
+
+    public function obtenerLugarSalidaTour($tour_id)
+    {
+        try {
+
+            $lugaresSalidaTour = LugarSalidaTour::select(
+                'lugar_salida_tours.id',
+                'lugar_salida_tours.lugar_salida_id',
+                'lugar_salida_tours.tour_id',
+                'lugar_salida_tours.hora',
+                'lugar_salida_tours.estado',
+                'lugares_salidas.descripcion',
+
+            )
+                ->join('lugares_salidas', 'lugares_salidas.id', 'lugar_salida_tours.lugar_salida_id')
+                ->where('lugar_salida_tours.tour_id', $tour_id)
+                ->orderBy('lugar_salida_tours.hora', 'asc')
+                ->get();
+
+            return  $lugaresSalidaTour;
+        } catch (Exception $e) {
+            return response()->json(["errorMessage" => $e->getMessage()], 400);
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      *

@@ -14,7 +14,7 @@ class ReservasController extends Controller
      */
     public function index()
     {
-        //
+        return "resrevas";
     }
 
     /**

@@ -12,5 +12,5 @@ class Clientes extends Model
     use SoftDeletes;
     protected $table = 'clientes';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['documento', 'tipoDocumento', 'nombres', 'apellidos', 'fechaNacimiento', 'correo', 'direccion', 'genero', 'telefono1', 'telefono2', 'telefono3', 'observaciones', 'estado'];
+    protected $fillable = ['documento', 'tipoDocumento', 'nombres', 'apellidos', 'fechaNacimiento', 'correo', 'direccion', 'genero', 'telefono1', 'telefono2', 'telefono3', 'observaciones', 'estado', 'tipo_acompanante_id'];
 }

@@ -4,9 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\CostoTour;
 use Illuminate\Http\Request;
+use Exception;
 
 class CostoTourController extends Controller
 {
+
+
+    public function obtenerPrecios($idProgramacionFecha)
+    {
+        try {
+            $CostoTour = CostoTour::select(
+                'costo_tours.id',
+                'costo_tours.programacion_fecha_id',
+                'costo_tours.tipo_acompanante_id',
+                'tipo_acompanantes.descripcion',
+                'costo_tours.aplicapago',
+                'costo_tours.precio',
+                'costo_tours.estado',
+            )
+                ->join('tipo_acompanantes', 'tipo_acompanantes.id', 'costo_tours.tipo_acompanante_id')
+                ->where('costo_tours.programacion_fecha_id', $idProgramacionFecha)->get();
+
+            return  $CostoTour;
+        } catch (Exception $e) {
+            return response()->json(["errorMessage" => $e->getMessage()], 400);
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      *

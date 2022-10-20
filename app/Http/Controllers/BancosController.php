@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bancos;
 use Illuminate\Http\Request;
+use Exception;
 
 class BancosController extends Controller
 {
@@ -14,7 +15,11 @@ class BancosController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            return  Bancos::all();
+        } catch (Exception $e) {
+            return response()->json(["errorMessage" => $e->getMessage()], 400);
+        }
     }
 
     /**

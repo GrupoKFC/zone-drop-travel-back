@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Habitaciones;
 use Illuminate\Http\Request;
+use Exception;
 
 class HabitacionesController extends Controller
 {
@@ -14,7 +15,12 @@ class HabitacionesController extends Controller
      */
     public function index()
     {
-        //
+
+        try {
+            return  Habitaciones::all();
+        } catch (Exception $e) {
+            return response()->json(["errorMessage" => $e->getMessage()], 400);
+        }
     }
 
     /**
