@@ -17,16 +17,17 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('reserva_id')->unsigned();
             $table->integer('costo_tour_id')->unsigned();
-            $table->integer('acompaniante_id')->unsigned();
+            $table->integer('cliente_id')->unsigned();
 
             $table->boolean('precioDefault')->nullable();
             $table->float('precio')->nullable();
             $table->string('observaciones', 1000)->nullable();
             $table->boolean('estado');
+            $table->enum("tipo_cliente", ["Titular", "Acompañante"]);
 
             $table->foreign('reserva_id')->references('id')->on('reservas');
             $table->foreign('costo_tour_id')->references('id')->on('costo_tours');
-            $table->foreign('acompaniante_id')->references('id')->on('acompaniantes');
+            $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->timestamps();
             $table->softDeletes();
         });

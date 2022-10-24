@@ -164,7 +164,15 @@ class ToursController extends Controller
             'tours.noIncluye',
             'tours.informacionAdicional',
             'tours.estado',
-        )->get();
+        )->get()
+            ->map(function ($tou) {
+
+                $tou->incluye = preg_replace("/[\r\n|\n|\r]+/",  "<br />", $tou->incluye);
+                $tou->noIncluye = preg_replace("/[\r\n|\n|\r]+/",  "<br />", $tou->noIncluye);
+                $tou->informacionAdicional = preg_replace("/[\r\n|\n|\r]+/",  "<br />", $tou->informacionAdicional);
+
+                return $tou;
+            });;
 
         foreach ($tours as $tour) {
             $lugarSalidaTour = LugarSalidaTour::select(

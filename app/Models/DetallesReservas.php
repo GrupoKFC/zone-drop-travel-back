@@ -12,5 +12,5 @@ class DetallesReservas extends Model
     use SoftDeletes;
     protected $table = 'detalles_reservas';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['reserva_id', 'costo_tour_id', 'acompaniante_id', 'precioDefault', 'precio', 'observaciones', 'estado'];
+    protected $fillable = ['reserva_id', 'costo_tour_id', 'cliente_id', 'precioDefault', 'precio', 'observaciones', 'estado', 'tipo_cliente'];
 }

@@ -13,4 +13,11 @@ class ProgramacionFechas extends Model
     protected $table = 'programacion_fechas';
     protected $dates = ['deleted_at'];
     protected $fillable = ['fecha', 'estado', 'tour_id', "observacion"];
+
+
+
+    public function Tour()
+    {
+        return $this->belongsTo(Tours::class,  'tour_id');
+    }
 }

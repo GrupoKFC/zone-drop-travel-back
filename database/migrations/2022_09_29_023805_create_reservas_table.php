@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('cliente_id')->unsigned();
             $table->integer('usuario_id')->unsigned();
             $table->integer('programacion_fecha_id')->unsigned();
+            $table->integer('lugar_salida_tours_id')->unsigned();
             $table->float('total');
             $table->boolean('esAgencia');
             $table->float('comisionAgencia')->nullable();
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->foreign('usuario_id')->references('id')->on('usuarios');
             $table->foreign('programacion_fecha_id')->references('id')->on('programacion_fechas');
+            $table->foreign('lugar_salida_tours_id')->references('id')->on('lugar_salida_tours');
 
             $table->timestamps();
             $table->softDeletes();

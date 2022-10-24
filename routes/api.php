@@ -7,6 +7,7 @@ use App\Http\Controllers\CostoTourController;
 use App\Http\Controllers\HabitacionesController;
 use App\Http\Controllers\LugaresSalidasController;
 use App\Http\Controllers\LugarSalidaTourController;
+use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\ReservasController;
 use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\TipoAcompanantesController;
@@ -55,3 +56,11 @@ Route::resource('habitacion', HabitacionesController::class);
 Route::resource('bancos', BancosController::class);
 
 Route::resource('reserva', ReservasController::class);
+
+
+
+
+
+Route::get('/reporte/titulares/{programacionFechaId}',  [ReportesController::class, 'listaTitularesTour']);
+
+Route::get('/reporte/mensual/{programacionFechaId}',  [ReportesController::class, 'reporteMensual']);
