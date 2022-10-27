@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Abonos;
 use App\Models\Acompaniantes;
 use App\Models\Clientes;
 use App\Models\DetallesReservas;
 use App\Models\Habitaciones;
+use App\Models\HabitacionReservas;
 use Illuminate\Support\Facades\DB;
 use App\Models\Reservas;
 use Illuminate\Http\Request;
@@ -47,7 +49,7 @@ class ReservasController extends Controller
             $cliente =  $data["cliente"];
             $acompaniantesRequest =  $data["acompaniantes"];
             $informacionPagos =  $data["informacionPagos"];
-            $bancoId =  $data["bancoId"];
+            $banco =  $data["banco"];
 
             $lugarSalida_id =  $data["lugarSalida"];
             $programacion_fecha_id =  $data["programacion_fecha_id"];
@@ -150,6 +152,32 @@ class ReservasController extends Controller
                 ]);
 
                 array_push($listaDetallesReservas, $detalleReserva);
+            }
+
+
+
+
+            foreach ($listHabitaciones as $hab) {
+                $HabitacionReserva = HabitacionReservas::create([
+                    'habitacion_id' => $hab["id"],
+                    'reserva_id' => $reserva["id"],
+                    'observaciones' => "",
+                    'estado' => true
+                ]);
+            }
+
+
+            if ($informacionPagos["abono"] > 0) {
+                $abono = Abonos::create([
+                    'reserva_id' => $reserva["id"],
+                    'banco_id' => $banco["id"],
+                    'tipo_transaccion_id' =>  $informacionPagos["tipoTransaccion"]["id"],
+                    'valor'  => $informacionPagos["abono"],
+                    'fecha' => $informacionPagos["fechaDeposito"],
+                    'observacion' =>  $informacionPagos["observaciones"],
+                    'numerodeposito' =>  $informacionPagos["numeroDeposito"],
+                    'estado' => true
+                ]);
             }
 
             DB::commit();

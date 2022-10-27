@@ -12,5 +12,5 @@ class TipoTransacciones extends Model
     use SoftDeletes;
     protected $table = 'tipo_transacciones';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['descripcion', 'estado'];
+    protected $fillable = ['descripcion', 'estado', 'default'];
 }

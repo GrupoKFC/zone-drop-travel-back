@@ -11,7 +11,9 @@ use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\ReservasController;
 use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\TipoAcompanantesController;
+use App\Http\Controllers\TipoTransaccionesController;
 use App\Http\Controllers\ToursController;
+use App\Models\TipoTransacciones;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -64,3 +66,8 @@ Route::resource('reserva', ReservasController::class);
 Route::get('/reporte/titulares/{programacionFechaId}',  [ReportesController::class, 'listaTitularesTour']);
 
 Route::get('/reporte/mensual/{programacionFechaId}',  [ReportesController::class, 'reporteMensual']);
+
+
+
+
+Route::get('/tipo-transacciones/list-select',  [TipoTransaccionesController::class, 'listSelect']);

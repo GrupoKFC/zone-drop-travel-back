@@ -12,5 +12,5 @@ class Bancos extends Model
     use SoftDeletes;
     protected $table = 'bancos';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['descripcion', 'estado'];
+    protected $fillable = ['descripcion', 'estado', 'default'];
 }

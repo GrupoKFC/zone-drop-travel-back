@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class TipoTransaccionesController extends Controller
 {
+    public function listSelect()
+    {
+        return TipoTransacciones::all();
+    }
     /**
      * Display a listing of the resource.
      *
