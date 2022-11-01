@@ -34,6 +34,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/servicios/listado/{limit}',  [ServiciosController::class, 'listado']);
 Route::resource('tipoacompanante', TipoAcompanantesController::class);
+
+
 Route::resource('lugaressalidas', LugaresSalidasController::class);
 
 Route::get('/lugar-salida-tour/obtener/{tour_id}',  [LugarSalidaTourController::class, 'obtenerLugarSalidaTour']);
@@ -41,7 +43,7 @@ Route::get('/lugar-salida-tour/obtener/{tour_id}',  [LugarSalidaTourController::
 
 Route::resource('tour', ToursController::class);
 Route::get('/tour/listado/tabla/',  [ToursController::class, 'listado']);
-
+Route::post('/tour/eliminar/{id}',  [ToursController::class, 'eliminar']);
 
 Route::resource('cliente', ClientesController::class);
 Route::get('/cliente/find/{idCliente}',  [ClientesController::class, 'find']);

@@ -6,6 +6,7 @@ use App\Models\CostoTour;
 use App\Models\LugaresSalidas;
 use App\Models\LugarSalidaTour;
 use App\Models\ProgramacionFechas;
+use App\Models\Reservas;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tours;
 use Exception;
@@ -45,29 +46,25 @@ class ToursController extends Controller
 
             $data = $request->json()->all();
             $toReturn = [];
-
             DB::beginTransaction();
-
             $programacionFechas = $data["programacionFechas"];
             $lugaresSalidas = $data["lugaresSalidas"];
-
-
             $tour =  Tours::create($request->json()->all());
             array_push($toReturn, $tour);
 
 
             foreach ($lugaresSalidas as $lugar) {
-                $NewlugarSaluda = null;
+                $NewlugarSalida = null;
                 if ($lugar["new"] == true) {
-                    $NewlugarSaluda =   LugaresSalidas::create([
+                    $NewlugarSalida =   LugaresSalidas::create([
                         "descripcion" => $lugar["descripcion"],
                         "estado" => true
                     ]);
                 } else {
-                    $NewlugarSaluda = $lugar;
+                    $NewlugarSalida = $lugar;
                 }
                 LugarSalidaTour::create([
-                    "lugar_salida_id" => $NewlugarSaluda["id"],
+                    "lugar_salida_id" => $NewlugarSalida["id"],
                     "tour_id" =>  $tour->id,
                     "hora" => $lugar["hora"],
                     "estado" => true
@@ -124,7 +121,6 @@ class ToursController extends Controller
      */
     public function edit(Tours $tours)
     {
-        //
     }
 
     /**
@@ -147,7 +143,6 @@ class ToursController extends Controller
      */
     public function destroy(Tours $tours)
     {
-        //
     }
 
     public function listado()
@@ -164,7 +159,9 @@ class ToursController extends Controller
             'tours.noIncluye',
             'tours.informacionAdicional',
             'tours.estado',
-        )->get()
+        )
+            ->orderBy('tours.created_at', 'desc')
+            ->get()
             ->map(function ($tou) {
 
                 $tou->incluye = preg_replace("/[\r\n|\n|\r]+/",  "<br />", $tou->incluye);
@@ -172,7 +169,7 @@ class ToursController extends Controller
                 $tou->informacionAdicional = preg_replace("/[\r\n|\n|\r]+/",  "<br />", $tou->informacionAdicional);
 
                 return $tou;
-            });;
+            });
 
         foreach ($tours as $tour) {
             $lugarSalidaTour = LugarSalidaTour::select(
@@ -224,5 +221,50 @@ class ToursController extends Controller
 
 
         return  $reporte;
+    }
+
+    public function eliminar($id)
+    {
+        try {
+            $toReturn = [];
+            $existenReservas = false;
+            $tour = Tours::select("*")->where("id", "=", $id)->first();
+            $programacionFechas =  $tour->programacionFechas;
+
+            foreach ($programacionFechas as $fechas) {
+                $reservas =  Reservas::where("programacion_fecha_id", "=",  $fechas["id"])->get();
+
+                $cantidadReservas = 0;
+                $fechasR = $fechas["fecha"];
+                $tieneReservas = false;
+                foreach ($reservas as $reserva) {
+
+                    $cantidadReservas++;
+                    $existenReservas = true;
+                    $tieneReservas = true;
+                }
+                if ($tieneReservas) {
+                    $response = [
+                        "fechas" =>  $fechasR,
+                        "cantidad"   => $cantidadReservas
+                    ];
+                    array_push($toReturn,  $response);
+                }
+            }
+
+
+            $response = null;
+
+            if (!$existenReservas) {
+                $tour->delete();
+                $response = ["existe_reserva" => $existenReservas, "reservas" =>  $toReturn, "Message" => "Tour Eliminado Correctamente"];
+            } else {
+                $response = ["existe_reserva" => $existenReservas, "reservas" =>  $toReturn, "Message" => "El Tour tiene registrado reservas. No se permite eliminar."];
+            }
+
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json(["existe_reserva" => false, "reservas" => [], "Message" => "Error con el Tour proporcionado."], 400);
+        }
     }
 }
