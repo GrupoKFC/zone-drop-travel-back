@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::view("/app/{path?}", "welcome");
+
+Route::get('/tables', function () {
+    return view('welcome');
+});
