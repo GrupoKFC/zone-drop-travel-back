@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AbonosController;
 use App\Http\Controllers\AcompaniantesController;
 use App\Http\Controllers\BancosController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\CostoTourController;
+use App\Http\Controllers\DetallesReservasController;
 use App\Http\Controllers\HabitacionesController;
 use App\Http\Controllers\LugaresSalidasController;
 use App\Http\Controllers\LugarSalidaTourController;
@@ -62,10 +64,20 @@ Route::resource('bancos', BancosController::class);
 Route::resource('reserva', ReservasController::class);
 
 
+Route::resource('abono', AbonosController::class);
+Route::post('/abono/eliminar/{id}',  [AbonosController::class, 'EliminarAbono']);
+
+Route::post('/detalle-reserva/eliminar/{id}',  [DetallesReservasController::class, 'EliminarDetalle']);
+
 
 
 
 Route::get('/reporte/titulares/{programacionFechaId}',  [ReportesController::class, 'listaTitularesTour']);
+
+Route::get('/reserva/listado/titulares/{programacionFechaId}',  [ReportesController::class, 'listaReservaTitularesTour']);
+
+
+
 
 Route::get('/reporte/mensual/{programacionFechaId}',  [ReportesController::class, 'reporteMensual']);
 

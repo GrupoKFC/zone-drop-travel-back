@@ -4,9 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\Abonos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class AbonosController extends Controller
 {
+
+
+    public function EliminarAbono($id)
+    {
+        try {
+            DB::beginTransaction();
+            $abono = Abonos::select("*")->where("id", "=", $id)->first();
+            $abono->delete();
+            DB::commit();
+            return response()->json($abono, 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(["Message" => "Error al eliminar"], 400);
+        }
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +34,7 @@ class AbonosController extends Controller
      */
     public function index()
     {
-        //
+        return "ejeje";
     }
 
     /**
@@ -35,7 +55,14 @@ class AbonosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $abono = Abonos::create($request->all());
+            DB::commit();
+            return response()->json($abono, 201);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
     }
 
     /**

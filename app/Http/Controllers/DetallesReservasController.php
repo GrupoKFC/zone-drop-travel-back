@@ -4,9 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\DetallesReservas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class DetallesReservasController extends Controller
 {
+
+    public function EliminarDetalle($id)
+    {
+        try {
+            DB::beginTransaction();
+            $detalleReserva = DetallesReservas::select("*")->where("id", "=", $id)->first();
+            $detalleReserva->delete();
+            DB::commit();
+            return response()->json($detalleReserva, 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(["Message" => "Error al eliminar"], 400);
+        }
+    }
     /**
      * Display a listing of the resource.
      *

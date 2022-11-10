@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Abonos;
 use App\Models\DetallesReservas;
 use App\Models\ProgramacionFechas;
 use App\Models\Reportes;
@@ -12,7 +13,74 @@ use App\Models\Tours;
 class ReportesController extends Controller
 {
 
+    public function listaReservaTitularesTour($programacionFechaId)
+    {
+        $programacionFechaID = ProgramacionFechas::find($programacionFechaId);
+        $programacionFechaID->Tour;
 
+        $informacionTour =  [
+            "titulo" => $programacionFechaID["tour"]["titulo"],
+            "duracion" => $programacionFechaID["tour"]["duracion"],
+            "fecha_salida" => $programacionFechaID["fecha"]
+
+        ];
+
+
+        $lugarSalidaTour = Reservas::select(
+            'reservas.id',
+            'reservas.total',
+            'reservas.observaciones',
+            'clientes.nombres',
+            'clientes.apellidos',
+            'clientes.documento',
+            'clientes.telefono1',
+            'clientes.telefono2',
+            // 'abonos.valor',
+            // 'abonos.fecha',
+        )
+            ->join('clientes', 'clientes.id', 'reservas.cliente_id')
+            // ->leftJoin('abonos', 'reservas.id', 'abonos.reserva_id')
+            ->where('reservas.programacion_fecha_id', $programacionFechaId)->get();
+
+        foreach ($lugarSalidaTour as $reservas) {
+            $abonos =  Abonos::where("reserva_id", "=",  $reservas["id"])->get();
+            $reservas->abonos =  $abonos;
+        }
+
+        foreach ($lugarSalidaTour as $reservas) {
+
+            $acompañantes = DetallesReservas::select(
+                'detalles_reservas.id',
+                'detalles_reservas.precio',
+                'detalles_reservas.observaciones',
+                'detalles_reservas.tipo_cliente',
+                'clientes.documento',
+                'clientes.nombres',
+                'clientes.apellidos',
+                'tipo_acompanantes.descripcion as categoria'
+            )
+                ->join('clientes', 'clientes.id', 'detalles_reservas.cliente_id')
+                ->join('costo_tours', 'costo_tours.id', 'detalles_reservas.costo_tour_id')
+                ->join('tipo_acompanantes', 'tipo_acompanantes.id', 'costo_tours.tipo_acompanante_id')
+
+                ->where('detalles_reservas.reserva_id',  $reservas["id"])
+                // ->where('detalles_reservas.tipo_cliente',   "Acompañante")
+                ->get();
+
+            $precioTotal = 0;
+
+            foreach ($acompañantes as $precios) {
+                $precioTotal += $precios["precio"];
+            }
+
+            $reservas->totalCalculado = $precioTotal;
+            $reservas->acompañantes = $acompañantes;
+        }
+
+
+
+        return  ["informacionTour" =>    $informacionTour,  "listadoClientes" => $lugarSalidaTour];
+    }
 
     public function listaTitularesTour($programacionFechaId)
     {
