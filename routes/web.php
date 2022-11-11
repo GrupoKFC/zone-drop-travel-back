@@ -23,3 +23,8 @@ Route::view("/app/{path?}", "welcome");
 Route::get('/tables', function () {
     return view('welcome');
 });
+
+
+Route::get('/reportes', function () {
+    return view('welcome');
+});
