@@ -9,9 +9,37 @@ use App\Models\Reportes;
 use Illuminate\Http\Request;
 use App\Models\Reservas;
 use App\Models\Tours;
+use Illuminate\Support\Carbon;
 
 class ReportesController extends Controller
 {
+
+    public function generarVoucher($reserva_id)
+    {
+        $reserva = Reservas::where('id', $reserva_id)->first();
+        $reserva->LugarSalidaTour->LugarSalida;
+
+        $reserva->tour = $reserva->ProgramacionFecha->Tour;
+        // $reserva->DetallesReservas = $reserva->DetallesReservas;
+
+
+        foreach ($reserva->DetallesReservas as $detalles) {
+            $detalles->Cliente;
+            $detalles->CostoTour->TipoAcompañante;
+        }
+
+        foreach ($reserva->Abonos as $abonos) {
+            $abonos->TipoTransaccion;
+            $abonos->Banco;
+        }
+
+        foreach ($reserva->HabitacionesReservas as $HabitacionesReservas) {
+            $HabitacionesReservas->Habitacion;
+        }
+
+
+        return $reserva;
+    }
 
     public function listaReservaTitularesTour($programacionFechaId)
     {
@@ -112,8 +140,94 @@ class ReportesController extends Controller
     }
 
 
+    public function reporteAnual($año)
+    {
+        $fecha = Carbon::now()->startOfMonth();
 
-    public function reporteMensual($programacionFechaId)
+
+        $ProgramacionFechas =   ProgramacionFechas::whereRaw('year(fecha) =' . $fecha->year)
+            // ->whereRaw('month(fecha) = ' . $mes)
+            ->get();
+
+
+
+        foreach ($ProgramacionFechas as $programacion_fecha) {
+            $programacion_fecha->Tour;
+        }
+
+
+        // Obtener las reservas
+        foreach ($ProgramacionFechas as $programacion_fecha) {
+            $reservas =   Reservas::where('programacion_fecha_id', $programacion_fecha["id"])->get();
+            $programacion_fecha->reservas = $reservas;
+        }
+
+        // Recorrer las reservas.
+        foreach ($ProgramacionFechas as $programacion_fecha) {
+            $reservas = $programacion_fecha["reservas"];
+
+
+            foreach ($reservas as $reserva) {
+                // $DetallesReservas =   DetallesReservas::where('reserva_id', $reserva["id"])->get();
+
+                $DetallesReservas =    DetallesReservas::select(
+                    'detalles_reservas.id as IDDetalleReserva',
+                    'detalles_reservas.precio',
+                    'detalles_reservas.observaciones',
+                    'detalles_reservas.tipo_cliente',
+                    'clientes.nombres',
+                    'clientes.apellidos'
+                )
+                    ->join('clientes', 'detalles_reservas.cliente_id', 'clientes.id')
+                    ->where('detalles_reservas.reserva_id', $reserva["id"])->get();
+
+                $reserva->DetallesReservas = $DetallesReservas;
+            }
+        }
+
+
+
+        return $ProgramacionFechas;
+    }
+
+
+    public function reporteMensual($mes)
+    {
+        $fecha = Carbon::now()->startOfMonth();
+        $ProgramacionFechas =   ProgramacionFechas::whereRaw('year(fecha) =' . $fecha->year)
+            ->whereRaw('month(fecha) = ' . $mes)
+            ->get();
+
+
+
+        foreach ($ProgramacionFechas as $programacion_fecha) {
+            $programacion_fecha->Tour;
+        }
+
+
+        // Obtener las reservas
+        foreach ($ProgramacionFechas as $programacion_fecha) {
+            $reservas =   Reservas::where('programacion_fecha_id', $programacion_fecha["id"])->get();
+            $programacion_fecha->reservas = $reservas;
+        }
+
+        // Recorrer las reservas.
+        foreach ($ProgramacionFechas as $programacion_fecha) {
+            $reservas = $programacion_fecha["reservas"];
+
+
+            foreach ($reservas as $reserva) {
+                $DetallesReservas =   DetallesReservas::where('reserva_id', $reserva["id"])->get();
+                $reserva->DetallesReservas = $DetallesReservas;
+            }
+        }
+
+
+
+        return $ProgramacionFechas;
+    }
+
+    public function reporteMensual2($programacionFechaId)
     {
 
         $tours = Tours::all();

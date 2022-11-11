@@ -4,9 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuarios;
 use Illuminate\Http\Request;
+use Exception;
 
 class UsuariosController extends Controller
 {
+
+    public function login(Request $request)
+    {
+        try {
+
+            $usuario =   Usuarios::select(
+                'usuarios.id',
+                'usuarios.nombres',
+                'usuarios.apellidos',
+            )
+                ->join('historial_accesos', 'historial_accesos.usuario_id', 'usuarios.id')
+                ->where('historial_accesos.nick', $request->user)
+                ->where('historial_accesos.pass', $request->pass)
+                ->where('historial_accesos.estado',  1)
+                ->first();
+
+            if ($usuario->id) {
+            }
+
+            return response()->json(["acceso" => true, "usuario" =>  $usuario, "Message" => "Acceso Correcto"], 200);
+        } catch (Exception $e) {
+            return response()->json(["acceso" => false, "usuario" => [], "Message" => "Credenciales incorrectas"], 401);
+        }
+    }
     /**
      * Display a listing of the resource.
      *

@@ -14,4 +14,16 @@ class Abonos extends Model
     protected $table = 'abonos';
     protected $dates = ['deleted_at'];
     protected $fillable = ['reserva_id', 'banco_id', 'tipo_transaccion_id', 'valor', 'fecha', 'observacion', 'numerodeposito', 'estado'];
+
+
+
+    public function Banco()
+    {
+        return $this->belongsTo(Bancos::class,  'banco_id');
+    }
+
+    public function TipoTransaccion()
+    {
+        return $this->belongsTo(TipoTransacciones::class,  'tipo_transaccion_id');
+    }
 }

@@ -14,4 +14,32 @@ class Reservas extends Model
     protected $table = 'reservas';
     protected $dates = ['deleted_at'];
     protected $fillable = ['cliente_id', 'usuario_id', 'programacion_fecha_id', 'lugar_salida_tours_id', 'total', 'esAgencia', 'comisionAgencia', 'descuento', 'observaciones', 'estado'];
+
+
+    public function ProgramacionFecha()
+    {
+        return $this->belongsTo(ProgramacionFechas::class,  'programacion_fecha_id');
+    }
+
+    public function LugarSalidaTour()
+    {
+        return $this->belongsTo(LugarSalidaTour::class,  'lugar_salida_tours_id');
+    }
+
+
+    public function DetallesReservas()
+    {
+        return $this->hasMany(DetallesReservas::class,  'reserva_id', 'id');
+    }
+
+
+    public function Abonos()
+    {
+        return $this->hasMany(Abonos::class,  'reserva_id', 'id');
+    }
+
+    public function HabitacionesReservas()
+    {
+        return $this->hasMany(HabitacionReservas::class,  'reserva_id', 'id');
+    }
 }

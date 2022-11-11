@@ -15,6 +15,7 @@ use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\TipoAcompanantesController;
 use App\Http\Controllers\TipoTransaccionesController;
 use App\Http\Controllers\ToursController;
+use App\Http\Controllers\UsuariosController;
 use App\Models\TipoTransacciones;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -75,13 +76,20 @@ Route::post('/detalle-reserva/eliminar/{id}',  [DetallesReservasController::clas
 Route::get('/reporte/titulares/{programacionFechaId}',  [ReportesController::class, 'listaTitularesTour']);
 
 Route::get('/reserva/listado/titulares/{programacionFechaId}',  [ReportesController::class, 'listaReservaTitularesTour']);
+Route::get('/reserva/voucher/genarar/{reserva_id}',  [ReportesController::class, 'generarVoucher']);
+
 
 
 
 
 Route::get('/reporte/mensual/{programacionFechaId}',  [ReportesController::class, 'reporteMensual']);
+Route::get('/reporte/anual/{anio}',  [ReportesController::class, 'reporteAnual']);
 
 
 
 
 Route::get('/tipo-transacciones/list-select',  [TipoTransaccionesController::class, 'listSelect']);
+
+
+
+Route::post('/usuario/login',  [UsuariosController::class, 'login']);

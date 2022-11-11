@@ -13,4 +13,10 @@ class HabitacionReservas extends Model
     protected $table = 'habitacion_reservas';
     protected $dates = ['deleted_at'];
     protected $fillable = ['habitacion_id', 'reserva_id', 'observaciones', 'estado'];
+
+
+    public function Habitacion()
+    {
+        return $this->belongsTo(Habitaciones::class,  'habitacion_id');
+    }
 }

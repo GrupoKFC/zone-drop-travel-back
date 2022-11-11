@@ -13,4 +13,9 @@ class CostoTour extends Model
     protected $table = 'costo_tours';
     protected $dates = ['deleted_at'];
     protected $fillable = ['programacion_fecha_id', 'tipo_acompanante_id', 'aplicapago', 'precio', 'estado'];
+
+    public function TipoAcompañante()
+    {
+        return $this->belongsTo(TipoAcompanantes::class,  'tipo_acompanante_id');
+    }
 }
