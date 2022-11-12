@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('nombres', '100');
             $table->string('apellidos', '100')->nullable();
             $table->date('fechaNacimiento')->nullable();
-            $table->string('correo', '100')->unique();
+            $table->string('correo', '100')->nullable();
             $table->string('direccion', '500')->nullable();
-            $table->enum("genero", ["Masculino", "Femenino", "Otro"]);
+            $table->enum("genero", ["Masculino", "Femenino", "Otro", ""])->nullable();
             $table->string('telefono1', '20')->nullable();
             $table->string('telefono2', '20')->nullable();
             $table->string('telefono3', '20')->nullable();

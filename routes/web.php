@@ -28,3 +28,8 @@ Route::get('/tables', function () {
 Route::get('/reportes', function () {
     return view('welcome');
 });
+
+
+Route::get('/authentication/sign-up', function () {
+    return view('welcome');
+});
