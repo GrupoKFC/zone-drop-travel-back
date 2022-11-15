@@ -44,7 +44,7 @@ class ReservasController extends Controller
     public function store(Request $request)
     {
         try {
-            $toReturn =  ["sussesMessage" => "Tour Registrado Correctamente"];
+
             $data = $request->json()->all();
             $cliente =  $data["cliente"];
             $acompaniantesRequest =  $data["acompaniantes"];
@@ -56,6 +56,8 @@ class ReservasController extends Controller
             $habitacionesNombres =  $data["habitaciones"];
             $listHabitaciones = [];
             $listAcompaniantes = [];
+
+
 
             DB::beginTransaction();
 
@@ -75,7 +77,6 @@ class ReservasController extends Controller
             foreach ($acompaniantesRequest as $acompa) {
                 $valorAcompañantes += $acompa["tipoAcompañante"]["precio"];
             }
-
 
             foreach ($habitacionesNombres as $habitacion) {
                 $habitacion = Habitaciones::where('descripcion', $habitacion)->first();
@@ -109,6 +110,7 @@ class ReservasController extends Controller
             }
 
 
+
             $reserva = Reservas::create([
                 'cliente_id'  =>  $cliente["id"],
                 'usuario_id' => 1,
@@ -121,6 +123,9 @@ class ReservasController extends Controller
                 'observaciones' => $informacionPagos["observaciones"],
                 'estado' =>  true
             ]);
+
+            $toReturn =   ["sussesMessage" => "Tour Registrado Correctamente",  "reserva" => $reserva];
+
 
 
             $detalleReservaTitular = DetallesReservas::create([
@@ -155,8 +160,6 @@ class ReservasController extends Controller
             }
 
 
-
-
             foreach ($listHabitaciones as $hab) {
                 $HabitacionReserva = HabitacionReservas::create([
                     'habitacion_id' => $hab["id"],
@@ -167,11 +170,14 @@ class ReservasController extends Controller
             }
 
 
+
+
+
             if ($informacionPagos["abono"] > 0) {
                 $abono = Abonos::create([
                     'reserva_id' => $reserva["id"],
-                    'banco_id' => $banco["id"],
-                    'tipo_transaccion_id' =>  $informacionPagos["tipoTransaccion"]["id"],
+                    'banco_id' => (isset($banco["id"]) != "") ?  $banco["id"] :  1,
+                    'tipo_transaccion_id' => (isset($informacionPagos["tipoTransaccion"]["id"]) != "") ?  $informacionPagos["tipoTransaccion"]["id"] :  1,
                     'valor'  => $informacionPagos["abono"],
                     'fecha' => $informacionPagos["fechaDeposito"],
                     'observacion' =>  $informacionPagos["observaciones"],
@@ -179,6 +185,8 @@ class ReservasController extends Controller
                     'estado' => true
                 ]);
             }
+
+
 
             DB::commit();
             return response()->json($toReturn, 200);

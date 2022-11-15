@@ -76,7 +76,7 @@ Route::post('/detalle-reserva/eliminar/{id}',  [DetallesReservasController::clas
 Route::get('/reporte/titulares/{programacionFechaId}',  [ReportesController::class, 'listaTitularesTour']);
 
 Route::get('/reserva/listado/titulares/{programacionFechaId}',  [ReportesController::class, 'listaReservaTitularesTour']);
-Route::get('/reserva/voucher/genarar/{reserva_id}',  [ReportesController::class, 'generarVoucher']);
+Route::get('/reserva/voucher/generar/{reserva_id}',  [ReportesController::class, 'generarVoucher']);
 
 
 

@@ -58,6 +58,8 @@ class ReportesController extends Controller
             'reservas.id',
             'reservas.total',
             'reservas.observaciones',
+            'reservas.comisionAgencia',
+            'reservas.descuento',
             'clientes.nombres',
             'clientes.apellidos',
             'clientes.documento',
@@ -70,9 +72,11 @@ class ReportesController extends Controller
             // ->leftJoin('abonos', 'reservas.id', 'abonos.reserva_id')
             ->where('reservas.programacion_fecha_id', $programacionFechaId)->get();
 
+
         foreach ($lugarSalidaTour as $reservas) {
             $abonos =  Abonos::where("reserva_id", "=",  $reservas["id"])->get();
             $reservas->abonos =  $abonos;
+            $reservas->totalDescuento  = $reservas["descuento"] + $reservas["comisionAgencia"];
         }
 
         foreach ($lugarSalidaTour as $reservas) {
@@ -96,6 +100,7 @@ class ReportesController extends Controller
                 ->get();
 
             $precioTotal = 0;
+
 
             foreach ($acompañantes as $precios) {
                 $precioTotal += $precios["precio"];

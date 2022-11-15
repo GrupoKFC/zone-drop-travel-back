@@ -30,6 +30,11 @@ Route::get('/reportes', function () {
 });
 
 
+Route::get('/login', function () {
+    return view('welcome');
+});
+
+
 Route::get('/authentication/sign-up', function () {
     return view('welcome');
 });

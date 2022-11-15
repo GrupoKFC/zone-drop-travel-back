@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('banco_id')->unsigned();
             $table->integer('tipo_transaccion_id')->unsigned();
             $table->float('valor');
-            $table->date('fecha');
+            $table->date('fecha')->nullable();
             $table->string('observacion', 600)->nullable();
             $table->string('numerodeposito', 600)->nullable();
             $table->boolean('estado');
