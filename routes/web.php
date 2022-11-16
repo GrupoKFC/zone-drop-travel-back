@@ -38,3 +38,8 @@ Route::get('/login', function () {
 Route::get('/authentication/sign-up', function () {
     return view('welcome');
 });
+
+
+Route::get('/tables/public/static/css/', function () {
+    return view('welcome');
+});
