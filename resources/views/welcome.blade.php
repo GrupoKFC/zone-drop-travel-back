@@ -18,17 +18,17 @@
                         <meta name="theme-color" content="#1A73E8"/>
                         <link rel="apple-touch-icon" sizes="76x76" href="public/apple-icon.png"/>
                         <link rel="manifest" href="public/manifest.json"/><title>Zone Drop Travel</title>
-                        <link rel="stylesheet" href="./estilos/fuentes.css"/><link rel="stylesheet" href="./estilos/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/><link href="./estilos/iconsMaterial.css" rel="stylesheet"/>
+                        <link rel="stylesheet" href="public/estilos/fuentes.css"/><link rel="stylesheet" href="public/estilos/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/><link href="public/estilos/iconsMaterial.css" rel="stylesheet"/>
                         <script src="./javascriptFiles/alertify.min.js"></script>
-                        <link rel="stylesheet" href="./estilos/alertify.min.css"/>
-                        <link rel="stylesheet" href="./estilos/default.min.css"/>
-                        <link rel="stylesheet" href="./estilos/semantic.min.css"/>
-                        <link rel="stylesheet" href="./estilos/bootstrap.min.css"/>
-                        <link rel="stylesheet" href="./estilos/alertify.rtl.min.css"/>
-                        <link rel="stylesheet" href="./estilos/default.rtl.min.css"/>
-                        <link rel="stylesheet" href="./estilos/semantic.rtl.min.css"/>
-                        <link rel="stylesheet" href="./estilos/bootstrap.rtl.min.css"/>
-                        <link rel="stylesheet" href="./estilos/StyleAll.css"/>
+                        <link rel="stylesheet" href="public/estilos/alertify.min.css"/>
+                        <link rel="stylesheet" href="public/estilos/default.min.css"/>
+                        <link rel="stylesheet" href="public/estilos/semantic.min.css"/>
+                        <link rel="stylesheet" href="public/estilos/bootstrap.min.css"/>
+                        <link rel="stylesheet" href="public/estilos/alertify.rtl.min.css"/>
+                        <link rel="stylesheet" href="public/estilos/default.rtl.min.css"/>
+                        <link rel="stylesheet" href="public/estilos/semantic.rtl.min.css"/>
+                        <link rel="stylesheet" href="public/estilos/bootstrap.rtl.min.css"/>
+                        <link rel="stylesheet" href="public/estilos/StyleAll.css"/>
                         <script defer="defer" src="public/static/js/main.d7c3e0fb.js">
                         </script><link href="public/static/css/main.bc6e49d3.css" rel="stylesheet">
                         </head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root">
