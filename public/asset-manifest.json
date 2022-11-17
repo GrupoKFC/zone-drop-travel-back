@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.c76fc81c.css",
+    "main.css": "/static/css/main.bc6e49d3.css",
     "main.js": "/static/js/main.d7c3e0fb.js",
     "static/media/pattern-tree.svg": "/static/media/pattern-tree.156bb943ac7fd244f10c115d085e085e.svg",
     "static/media/home-decor-1.jpg": "/static/media/home-decor-1.05e218fd495ccc65c99d.jpg",
@@ -16,16 +16,16 @@
     "static/media/logo-slack.svg": "/static/media/logo-slack.7c47c5aa474b5c4fb39fcf05ffb8e4e7.svg",
     "static/media/logo-xd.svg": "/static/media/logo-xd.6e37886f94dba0c2967ece68a152e30c.svg",
     "static/media/logo-invision.svg": "/static/media/logo-invision.a1062115730dcd10e1c4f4abe7b9ab33.svg",
-    "index.html": "/index.html",
     "static/media/logo-spotify.svg": "/static/media/logo-spotify.e83cf56c9d99a1fdf59e8deb58bbe470.svg",
     "static/media/logo-jira.svg": "/static/media/logo-jira.c19fd4e416babfbd0fdb0a794188c601.svg",
     "static/media/logo-atlassian.svg": "/static/media/logo-atlassian.f2b0e8570a4b4ce768854ff3dad1a6e1.svg",
     "static/media/logo-asana.svg": "/static/media/logo-asana.d758f410d82760a61d1eabcb03409de6.svg",
-    "main.c76fc81c.css.map": "/static/css/main.c76fc81c.css.map",
+    "index.html": "/index.html",
+    "main.bc6e49d3.css.map": "/static/css/main.bc6e49d3.css.map",
     "main.d7c3e0fb.js.map": "/static/js/main.d7c3e0fb.js.map"
   },
   "entrypoints": [
-    "static/css/main.c76fc81c.css",
+    "static/css/main.bc6e49d3.css",
     "static/js/main.d7c3e0fb.js"
   ]
 }
