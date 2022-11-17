@@ -19,7 +19,7 @@
                         <link rel="apple-touch-icon" sizes="76x76" href="public/apple-icon.png"/>
                         <link rel="manifest" href="public/manifest.json"/><title>Zone Drop Travel</title>
                         <link rel="stylesheet" href="public/estilos/fuentes.css"/><link rel="stylesheet" href="public/estilos/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/><link href="public/estilos/iconsMaterial.css" rel="stylesheet"/>
-                        <script src="./javascriptFiles/alertify.min.js"></script>
+                        <script src="public/javascriptFiles/alertify.min.js"></script>
                         <link rel="stylesheet" href="public/estilos/alertify.min.css"/>
                         <link rel="stylesheet" href="public/estilos/default.min.css"/>
                         <link rel="stylesheet" href="public/estilos/semantic.min.css"/>
