@@ -34,7 +34,12 @@ class ReportesController extends Controller
         foreach ($reservas as $reserva) {
             $reserva->ClienteTitular;
             $reserva->LugarSalidaTour->LugarSalida;
-            $reserva->Abonos;
+
+
+            foreach ($reserva->Abonos as $abonos) {
+                $abonos->Banco;
+                $abonos->TipoTransaccion;
+            }
 
             foreach ($reserva->DetallesReservas as $detalles) {
 

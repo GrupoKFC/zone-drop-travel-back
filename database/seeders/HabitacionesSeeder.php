@@ -15,6 +15,12 @@ class HabitacionesSeeder extends Seeder
      */
     public function run()
     {
+        $hab0   = new Habitaciones();
+        $hab0->descripcion = "No Aplica";
+        $hab0->estado = true;
+        $hab0->save();
+
+
         $hab   = new Habitaciones();
         $hab->descripcion = "Individual";
         $hab->estado = true;
@@ -27,7 +33,7 @@ class HabitacionesSeeder extends Seeder
 
 
         $hab2   = new Habitaciones();
-        $hab2->descripcion = "Tripe";
+        $hab2->descripcion = "Triple";
         $hab2->estado = true;
         $hab2->save();
 
@@ -42,6 +48,12 @@ class HabitacionesSeeder extends Seeder
         $hab4->estado = true;
         $hab4->save();
 
+        $hab_   = new Habitaciones();
+        $hab_->descripcion = "Sextuple";
+        $hab_->estado = true;
+        $hab_->save();
+
+
         $hab5   = new Habitaciones();
         $hab5->descripcion = "Suite";
         $hab5->estado = true;
@@ -51,5 +63,11 @@ class HabitacionesSeeder extends Seeder
         $hab6->descripcion = "Presidencial";
         $hab6->estado = true;
         $hab6->save();
+
+
+        $hab7   = new Habitaciones();
+        $hab7->descripcion = "Matrimonial";
+        $hab7->estado = true;
+        $hab7->save();
     }
 }

@@ -1,11 +1,12 @@
 {
   "files": {
-    "main.css": "/static/css/main.bc6e49d3.css",
-    "main.js": "/static/js/main.b0bd35dc.js",
+    "main.css": "/static/css/main.a91eada2.css",
+    "main.js": "/static/js/main.8e8e60f2.js",
     "static/media/pattern-tree.svg": "/static/media/pattern-tree.156bb943ac7fd244f10c115d085e085e.svg",
     "static/media/home-decor-1.jpg": "/static/media/home-decor-1.05e218fd495ccc65c99d.jpg",
     "static/media/bg-sign-in-basic.jpeg": "/static/media/bg-sign-in-basic.f327db1d0e4b00ba3c81.jpeg",
     "static/media/bg-sign-up-cover.jpeg": "/static/media/bg-sign-up-cover.30c5950b22e74f0d82ba.jpeg",
+    "static/media/firma_voucher.png": "/static/media/firma_voucher.940d151f1550090a6c0f.png",
     "static/media/visa.png": "/static/media/visa.71c0d5e9e2aaee42e4c3.png",
     "static/media/mastercard.png": "/static/media/mastercard.27fca3e7637a9458fb64.png",
     "static/media/team-1.jpg": "/static/media/team-1.0fd36e0ee93dcfacdef8.jpg",
@@ -21,11 +22,11 @@
     "static/media/logo-jira.svg": "/static/media/logo-jira.c19fd4e416babfbd0fdb0a794188c601.svg",
     "static/media/logo-atlassian.svg": "/static/media/logo-atlassian.f2b0e8570a4b4ce768854ff3dad1a6e1.svg",
     "static/media/logo-asana.svg": "/static/media/logo-asana.d758f410d82760a61d1eabcb03409de6.svg",
-    "main.bc6e49d3.css.map": "/static/css/main.bc6e49d3.css.map",
-    "main.b0bd35dc.js.map": "/static/js/main.b0bd35dc.js.map"
+    "main.a91eada2.css.map": "/static/css/main.a91eada2.css.map",
+    "main.8e8e60f2.js.map": "/static/js/main.8e8e60f2.js.map"
   },
   "entrypoints": [
-    "static/css/main.bc6e49d3.css",
-    "static/js/main.b0bd35dc.js"
+    "static/css/main.a91eada2.css",
+    "static/js/main.8e8e60f2.js"
   ]
 }
