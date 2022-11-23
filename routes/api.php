@@ -82,9 +82,10 @@ Route::get('/reserva/voucher/generar/{reserva_id}',  [ReportesController::class,
 
 
 
+
 Route::get('/reporte/mensual/{programacionFechaId}',  [ReportesController::class, 'reporteMensual']);
 Route::get('/reporte/anual/{anio}',  [ReportesController::class, 'reporteAnual']);
-
+Route::get('/reporte/mensual/pasajeros/{programacionFechaID}',  [ReportesController::class, 'ReportePasajeros']);
 
 
 

@@ -27,6 +27,14 @@ class Reservas extends Model
     }
 
 
+    public function ClienteTitular()
+    {
+        return $this->belongsTo(Clientes::class,  'cliente_id');
+    }
+
+
+
+
     public function DetallesReservas()
     {
         return $this->hasMany(DetallesReservas::class,  'reserva_id', 'id');

@@ -14,6 +14,45 @@ use Illuminate\Support\Carbon;
 class ReportesController extends Controller
 {
 
+    public function ReportePasajeros($programacionFechaID)
+    {
+        $ProgramacionFechas =   ProgramacionFechas::where('id', $programacionFechaID)->first();
+
+        foreach ($ProgramacionFechas->CostoTour as $programacion) {
+            $programacion->TipoAcompañante;
+        }
+        $ProgramacionFechas->Tour;
+        $reservas = Reservas::where('programacion_fecha_id',  $ProgramacionFechas["id"])->get();
+
+
+        // foreach ($reservas->Abonos as $abonos) {
+        //     $abonos->TipoTransaccion;
+        //     $abonos->Banco;
+        // }
+
+
+        foreach ($reservas as $reserva) {
+            $reserva->ClienteTitular;
+            $reserva->LugarSalidaTour->LugarSalida;
+            $reserva->Abonos;
+
+            foreach ($reserva->DetallesReservas as $detalles) {
+
+                $detalles->CostoTour->TipoAcompañante;
+            }
+
+
+
+            // $reserva->CostoTour->TipoAcompañante;
+        }
+
+        foreach ($reserva->DetallesReservas as $reserva) {
+        }
+
+        return  ["reservas" => $reservas, "costosTour" => $ProgramacionFechas];
+    }
+
+
     public function generarVoucher($reserva_id)
     {
         $reserva = Reservas::where('id', $reserva_id)->first();

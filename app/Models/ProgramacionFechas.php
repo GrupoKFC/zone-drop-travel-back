@@ -20,4 +20,10 @@ class ProgramacionFechas extends Model
     {
         return $this->belongsTo(Tours::class,  'tour_id');
     }
+
+
+    public function CostoTour()
+    {
+        return $this->hasMany(CostoTour::class,  'programacion_fecha_id', 'id');
+    }
 }
