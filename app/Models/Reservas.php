@@ -13,7 +13,7 @@ class Reservas extends Model
     use SoftDeletes;
     protected $table = 'reservas';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['cliente_id', 'usuario_id', 'programacion_fecha_id', 'lugar_salida_tours_id', 'total', 'esAgencia', 'comisionAgencia', 'descuento', 'observaciones', 'estado'];
+    protected $fillable = ['cliente_id', 'usuario_id', 'programacion_fecha_id', 'lugar_salida_tours_id', 'total', 'esAgencia', 'comisionAgencia', 'descuento', 'costoAdicional', 'costoAdicionalMotivo', 'observaciones', 'estado'];
 
 
     public function ProgramacionFecha()

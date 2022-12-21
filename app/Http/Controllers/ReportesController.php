@@ -104,6 +104,8 @@ class ReportesController extends Controller
             'reservas.observaciones',
             'reservas.comisionAgencia',
             'reservas.descuento',
+            'reservas.costoAdicional',
+            'reservas.costoAdicionalMotivo',
             'clientes.nombres',
             'clientes.apellidos',
             'clientes.documento',

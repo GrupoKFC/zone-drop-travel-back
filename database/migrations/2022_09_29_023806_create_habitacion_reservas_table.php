@@ -17,6 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('habitacion_id')->unsigned();
             $table->integer('reserva_id')->unsigned();
+            $table->integer('cantidad')->nullable();
             $table->string('observaciones', 2000)->nullable();
             $table->boolean('estado');
 

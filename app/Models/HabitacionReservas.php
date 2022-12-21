@@ -12,7 +12,7 @@ class HabitacionReservas extends Model
     use SoftDeletes;
     protected $table = 'habitacion_reservas';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['habitacion_id', 'reserva_id', 'observaciones', 'estado'];
+    protected $fillable = ['habitacion_id', 'reserva_id', 'cantidad', 'observaciones', 'estado'];
 
 
     public function Habitacion()

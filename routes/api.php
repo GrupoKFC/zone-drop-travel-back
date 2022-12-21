@@ -48,6 +48,12 @@ Route::resource('tour', ToursController::class);
 Route::get('/tour/listado/tabla/',  [ToursController::class, 'listado']);
 Route::post('/tour/eliminar/{id}',  [ToursController::class, 'eliminar']);
 
+Route::post('/tour/add-fecha-salida/id/{idTour}',  [ToursController::class, 'añadirFecha']);
+Route::post('/tour/actualizar/{id}',  [ToursController::class, 'actualizarTour']);
+
+Route::post('/tour/actualizar-precio/{programacionFechaId}',  [ToursController::class, 'actualizarPrecioTour']);
+
+
 Route::resource('cliente', ClientesController::class);
 Route::get('/cliente/find/{idCliente}',  [ClientesController::class, 'find']);
 Route::get('/acompaniante/find/{documento}',  [AcompaniantesController::class, 'find']);
@@ -78,8 +84,12 @@ Route::get('/reporte/titulares/{programacionFechaId}',  [ReportesController::cla
 Route::get('/reserva/listado/titulares/{programacionFechaId}',  [ReportesController::class, 'listaReservaTitularesTour']);
 Route::get('/reserva/voucher/generar/{reserva_id}',  [ReportesController::class, 'generarVoucher']);
 
+Route::get('/reserva/acompaniante/obtener/{reserva_id}',  [ReservasController::class, 'obtenerAcompañante']);
+Route::get('/reserva/habitaciones/obtener/{reserva_id}',  [ReservasController::class, 'obtenerHabitaciones']);
+Route::get('/reserva/lugar-salida/obtener/{reserva_id}',  [ReservasController::class, 'obtenerLugarSalida']);
+Route::get('/reserva/precios/obtener/{reserva_id}',  [ReservasController::class, 'obtenerPrecios']);
 
-
+Route::post('/reserva/editar/{reserva_id}',  [ReservasController::class, 'editarReserva']);
 
 
 

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->boolean('esAgencia');
             $table->float('comisionAgencia')->nullable();
             $table->float('descuento')->nullable();
+            $table->float('costoAdicional')->nullable();
+            $table->string('costoAdicionalMotivo', 500)->nullable();
             $table->string('observaciones')->nullable();
             $table->boolean('estado');
             $table->foreign('cliente_id')->references('id')->on('clientes');

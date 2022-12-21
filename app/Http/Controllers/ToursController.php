@@ -14,6 +14,146 @@ use Illuminate\Http\Request;
 
 class ToursController extends Controller
 {
+
+    public function actualizarPrecioTour($programacionFechaId,  Request $request)
+    {
+
+        try {
+
+            $exitenReserva = false;
+            $cantidadReserva = 0;
+            $reservas = Reservas::select("*")->where("programacion_fecha_id", "=", $programacionFechaId)->get();
+            if (is_array($reservas) || is_object($reservas)) {
+                foreach ($reservas as $reserv) {
+                    $cantidadReserva++;
+                    $exitenReserva = true;
+                }
+            }
+            if ($exitenReserva) {
+                return response()->json(["Message" => "En está fecha ya existen ($cantidadReserva) Reservas. NO se permite modificar los precios"], 209);
+            }
+
+
+            $data = $request->json()->all();
+            $programacionFecha = ProgramacionFechas::select("*")->where("id", "=", $programacionFechaId)->first();
+
+
+            $precios = $data["precios"];
+
+
+            foreach ($precios as $precio) {
+
+                if ($precio["type"] == "new") {
+                    $costoTour =  CostoTour::create([
+                        'programacion_fecha_id' =>  $programacionFecha->id,
+                        "tipo_acompanante_id" => $precio["id"],
+                        'aplicapago' => ($precio["valor"] == 0) ? false : true,
+                        'precio' =>  $precio["valor"],
+                        'estado' =>  1
+                    ]);
+                } else {
+                    // En caso de actualizar.
+                    $costo_tour = CostoTour::select("*")->where("id", "=", $precio["id"])->first();
+                    $costo_tour->precio =  $precio["valor"];
+                    $costo_tour->aplicapago =  ($precio["valor"] == 0) ? false : true;
+                    $costo_tour->save();
+                }
+            }
+
+            DB::commit();
+            return response()->json(["Message" => "Datos Actualizados Correctamente"], 200);
+        } catch (Exception $e) {
+
+            DB::rollBack();
+            return response()->json(["Message" => $e->getMessage()], 209);
+        }
+    }
+    public function actualizarTour($idTour,  Request $request)
+    {
+        try {
+
+
+            $tour = Tours::select("*")->where("id", "=", $idTour)->first();
+            $data = $request->json()->all();
+
+            $lugaresSalidas = $data["lugaresSalidas"];
+
+
+            $tour->titulo = $data["titulo"];
+            $tour->duracion = $data["duracion"];
+            $tour->detalles = $data["detalles"];
+            $tour->imagen = $data["imagen"];
+            $tour->incluye = $data["incluye"];
+            $tour->noIncluye = $data["noIncluye"];
+            $tour->informacionAdicional = $data["informacionAdicional"];
+            $tour->save();
+
+            foreach ($lugaresSalidas as $lugar) {
+                $NewlugarSalida = null;
+                if ($lugar["new"] == true) {
+                    $NewlugarSalida =   LugaresSalidas::create([
+                        "descripcion" => $lugar["descripcion"],
+                        "estado" => true
+                    ]);
+                } else {
+                    $NewlugarSalida = $lugar;
+                }
+                LugarSalidaTour::create([
+                    "lugar_salida_id" => $NewlugarSalida["id"],
+                    "tour_id" =>  $tour->id,
+                    "hora" => $lugar["hora"],
+                    "estado" => true
+                ]);
+            }
+
+            // return  $tour;
+
+            DB::commit();
+            return response()->json(["Message" => "Datos Actualizados Correctamente"], 200);
+        } catch (Exception $e) {
+
+            DB::rollBack();
+            return response()->json(["errorMessage" => $e->getMessage()], 209);
+        }
+    }
+    public function añadirFecha($idTour,  Request $request)
+    {
+        try {
+            $data = $request->json()->all();
+            $programacionFechas = $data["fechas"];
+            $precios = $data["precios"];
+
+            foreach ($programacionFechas as $programacion) {
+                $nuevaProgramacionFecha =  ProgramacionFechas::create(
+                    [
+                        'fecha' => $programacion["fecha"],
+                        "observacion" =>  "",
+                        'estado' => true,
+                        'tour_id' =>  $idTour
+                    ]
+                );
+
+                foreach ($precios as $precio) {
+                    $costoTour =  CostoTour::create([
+                        'programacion_fecha_id' =>  $nuevaProgramacionFecha->id,
+                        "tipo_acompanante_id" => $precio["id"],
+                        'aplicapago' => ($precio["valor"] == 0) ? false : true,
+                        'precio' =>  $precio["valor"],
+                        'estado' =>  1
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return response()->json(["Message" => "Fechas & Costos Guardados Correctamente"], 200);
+        } catch (Exception $e) {
+
+            DB::rollBack();
+            return response()->json(["errorMessage" => $e->getMessage()], 209);
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -160,7 +300,7 @@ class ToursController extends Controller
             'tours.informacionAdicional',
             'tours.estado',
         )
-            ->orderBy('tours.created_at', 'desc')
+            ->orderBy('tours.titulo', 'asc')
             ->get()
             ->map(function ($tou) {
 
