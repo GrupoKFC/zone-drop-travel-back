@@ -207,6 +207,7 @@ class ToursController extends Controller
                     "lugar_salida_id" => $NewlugarSalida["id"],
                     "tour_id" =>  $tour->id,
                     "hora" => $lugar["hora"],
+                    "siguienteDia" => $lugar["siguienteDia"],
                     "estado" => true
                 ]);
             }

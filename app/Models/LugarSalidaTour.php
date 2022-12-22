@@ -12,7 +12,7 @@ class LugarSalidaTour extends Model
     use SoftDeletes;
     protected $table = 'lugar_salida_tours';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['lugar_salida_id', 'tour_id', 'hora', 'estado'];
+    protected $fillable = ['lugar_salida_id', 'tour_id', 'hora', 'siguienteDia', 'estado'];
 
     public function LugarSalida()
     {

@@ -20,6 +20,7 @@ class LugarSalidaTourController extends Controller
                 'lugar_salida_tours.lugar_salida_id',
                 'lugar_salida_tours.tour_id',
                 'lugar_salida_tours.hora',
+                'lugar_salida_tours.siguienteDia',
                 'lugar_salida_tours.estado',
                 'lugares_salidas.descripcion',
 

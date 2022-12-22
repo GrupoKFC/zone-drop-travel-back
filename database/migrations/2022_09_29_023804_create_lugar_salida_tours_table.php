@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('lugar_salida_id')->unsigned();
             $table->integer('tour_id')->unsigned();
             $table->string('hora', 15);
+            $table->boolean('siguienteDia')->nullable();
             $table->boolean('estado');
             $table->foreign('lugar_salida_id')->references('id')->on('lugares_salidas');
             $table->foreign('tour_id')->references('id')->on('tours');

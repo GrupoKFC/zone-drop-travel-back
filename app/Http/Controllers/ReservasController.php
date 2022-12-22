@@ -29,12 +29,13 @@ class ReservasController extends Controller
             $informacionPagos =  $data["informacionPagos"];
             $lugarSalida_id =  $data["lugarSalida"];
             $habitacionesNombres =  $data["habitaciones"];
+            $habitcionesEliminadas =  $data["habitcionesEliminadas"];
+            $acompañantesEliminados =  $data["acompañantesEliminados"];
+
+
             $listHabitaciones = [];
             $listAcompaniantes = [];
-
-
-
-
+            $listHabitacionesDelete = [];
 
 
 
@@ -135,8 +136,6 @@ class ReservasController extends Controller
                     array_push($listHabitaciones, $habitacion1);
                 }
             }
-
-
             foreach ($listHabitaciones as $hab) {
                 $HabitacionReserva = HabitacionReservas::create([
                     'habitacion_id' => $hab["id"],
@@ -146,6 +145,35 @@ class ReservasController extends Controller
                     'estado' => true
                 ]);
             }
+
+            // Eliminar acompañante / Detalle reserva.
+            foreach ($acompañantesEliminados as $acomp) {
+                $detalleReserva = DetallesReservas::where([
+                    ['reserva_id', '=',   $reserva_id],
+                    ['tipo_cliente', '=',   "Acompañante"],
+                    ['cliente_id', '=',    $acomp["id"]]
+                ])->first();
+                $detalleReserva->delete();
+            }
+
+            // Eliminar las habitaciones.
+            foreach ($habitcionesEliminadas as $habitacion) {
+                $dbo_habitacion = Habitaciones::where('descripcion', $habitacion["tipo"])->first();
+                array_push($listHabitacionesDelete, $dbo_habitacion);
+            }
+            foreach ($listHabitacionesDelete as $hab) {
+                $habitacionReserva = HabitacionReservas::where([
+                    ['reserva_id', '=',   $reserva_id],
+                    ['habitacion_id', '=',  $hab["id"]]
+                ])->first();
+                $habitacionReserva->delete();
+            }
+            // Fin Eliminar Habitaciones
+
+
+
+
+
 
             DB::commit();
             return response()->json(["sussesMessage" => "Reserva Actualizada"], 200);
