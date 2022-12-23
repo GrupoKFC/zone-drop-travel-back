@@ -179,22 +179,19 @@ class ReportesController extends Controller
         ];
 
 
-        $lugarSalidaTour = Reservas::select(
-            'reservas.id',
-            'reservas.total',
-            'reservas.observaciones',
-            'clientes.nombres',
-            'clientes.apellidos',
-            'clientes.documento',
-            'clientes.telefono1',
-            'clientes.telefono2'
-        )
-            ->join('clientes', 'clientes.id', 'reservas.cliente_id')
-            ->where('reservas.programacion_fecha_id', $programacionFechaId)
-            ->get();
-
-
-
+        // $lugarSalidaTour = Reservas::select(
+        //     'reservas.id',
+        //     'reservas.total',
+        //     'reservas.observaciones',
+        //     'clientes.nombres',
+        //     'clientes.apellidos',
+        //     'clientes.documento',
+        //     'clientes.telefono1',
+        //     'clientes.telefono2'
+        // )
+        //     ->join('clientes', 'clientes.id', 'reservas.cliente_id')
+        //     ->where('reservas.programacion_fecha_id', $programacionFechaId)
+        //     ->get();
 
 
         $acompañantes = DetallesReservas::select(
@@ -212,7 +209,6 @@ class ReportesController extends Controller
             ->where('reservas.programacion_fecha_id',  $programacionFechaId)
             ->orderBy('clientes.nombres', 'asc')
             ->get();
-
 
         return  ["informacionTour" =>    $informacionTour,  "listadoClientes" => $acompañantes];
     }

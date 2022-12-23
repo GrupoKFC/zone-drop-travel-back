@@ -38,6 +38,24 @@ class ReservasController extends Controller
             $listHabitacionesDelete = [];
 
 
+            $habitacionNoAplica = false;
+            foreach ($habitacionesNombres as $hab) {
+                if ($hab["tipo"] == "No Aplica") {
+                    $habitacionNoAplica = true;
+                }
+            }
+            if ($habitacionNoAplica) {
+                // ELiminar Todas y dejar 1. 
+                $habitacionesReservas =  HabitacionReservas::where("reserva_id", "=",  $reserva_id)->get();
+                foreach ($habitacionesReservas as $habitDelete) {
+                    $habitDelete->delete();
+                }
+            }
+
+
+
+
+
 
             // 1 Cliente
             $dbo_cliente =  Clientes::where("id", "=",  $cliente["id"])->first();
@@ -136,6 +154,7 @@ class ReservasController extends Controller
                 $dbo_reserva->save();
             }
 
+
             foreach ($habitacionesNombres as $habitacion) {
                 if (!isset($habitacion["existente"])) {
                     $habitacion1 = Habitaciones::where('descripcion', $habitacion["tipo"])->first();
@@ -143,6 +162,7 @@ class ReservasController extends Controller
                     array_push($listHabitaciones, $habitacion1);
                 }
             }
+
             foreach ($listHabitaciones as $hab) {
                 $HabitacionReserva = HabitacionReservas::create([
                     'habitacion_id' => $hab["id"],
