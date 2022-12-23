@@ -108,6 +108,8 @@ class ReportesController extends Controller
             'reservas.lugar_salida_tours_id',
             'reservas.costoAdicional',
             'reservas.costoAdicionalMotivo',
+            'reservas.observaciones',
+
             'programacion_fechas.tour_id',
             'clientes.nombres',
             'clientes.apellidos',
@@ -139,14 +141,15 @@ class ReportesController extends Controller
                 'clientes.documento',
                 'clientes.nombres',
                 'clientes.apellidos',
-                'tipo_acompanantes.descripcion as categoria'
+                'tipo_acompanantes.descripcion as categoria',
+
             )
                 ->join('clientes', 'clientes.id', 'detalles_reservas.cliente_id')
                 ->join('costo_tours', 'costo_tours.id', 'detalles_reservas.costo_tour_id')
                 ->join('tipo_acompanantes', 'tipo_acompanantes.id', 'costo_tours.tipo_acompanante_id')
 
                 ->where('detalles_reservas.reserva_id',  $reservas["id"])
-                // ->where('detalles_reservas.tipo_cliente',   "Acompañante")
+
                 ->get();
 
             $precioTotal = 0;
