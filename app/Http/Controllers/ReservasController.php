@@ -77,6 +77,9 @@ class ReservasController extends Controller
                     );
                     $newAcompaniante->añadirAlDetalle = $acompa["añadirAlDetalle"];
                     $newAcompaniante["tipoAcompañante"] = $acompa["tipoAcompañante"];
+                    $newAcompaniante["lugarSalida"] = $acompa["lugarSalida"];
+
+
                     array_push($listAcompaniantes, $newAcompaniante);
                 } else {
                     // Actualizar Datos del Acompañante.
@@ -87,6 +90,9 @@ class ReservasController extends Controller
                     }
                     $dbo_acompañante["tipoAcompañante"] = $acompa["tipoAcompañante"];
                     $dbo_acompañante->añadirAlDetalle = $acompa["añadirAlDetalle"];
+                    $dbo_acompañante["lugarSalida"] = $acompa["lugarSalida"];
+
+
                     array_push($listAcompaniantes, $dbo_acompañante);
                 }
             }
@@ -100,6 +106,7 @@ class ReservasController extends Controller
                         'reserva_id' => $reserva_id,
                         'costo_tour_id' => $acompañante["tipoAcompañante"]["id"],
                         'cliente_id' => $acompañante["id"],
+                        'lugar_salida_tours_id' => $acompañante["lugarSalida"]["id"],
                         'precioDefault' =>  $acompañante["tipoAcompañante"]["aplicapago"],
                         'precio' => $acompañante["tipoAcompañante"]["precio"],
                         'observaciones' => "",
@@ -263,6 +270,8 @@ class ReservasController extends Controller
             $detalle->CostoTour->TipoAcompañante;
             $detalle->Cliente;
 
+            optional($detalle->LugarSalidaTour)->LugarSalida;
+            $lugarSalidaPEPA  =   optional($detalle->LugarSalidaTour)->LugarSalida;
 
             $costoTour = CostoTour::select(
                 'costo_tours.id',
@@ -284,7 +293,20 @@ class ReservasController extends Controller
             $detalle->Cliente->existente = true;
             $detalle->Cliente->añadirAlDetalle = false;
             $detalle->Cliente->tipoAcompañante = $costoTour;
-            //   $detalle->Cliente->tipoAcompañante = $detalle->CostoTour->TipoAcompañante;
+            // $detalle->Cliente->lugarSalida =    $detalle->LugarSalidaTour;
+
+
+            $detalle->Cliente->lugarSalida =      [
+                "id" =>   optional($detalle->LugarSalidaTour)["id"],
+                "lugar_salida_id" =>   optional($detalle->LugarSalidaTour)["lugar_salida_id"],
+                "tour_id" => optional($detalle->LugarSalidaTour)["tour_id"],
+                "hora" => optional($detalle->LugarSalidaTour)["hora"],
+                "siguienteDia" =>  optional($detalle->LugarSalidaTour)["siguienteDia"],
+                "estado" => 1,
+                "descripcion" =>  optional($lugarSalidaPEPA)["descripcion"] // optional($detalle->LugarSalidaTour["lugar_salida"])["descripcion"],
+            ];
+
+
             if ($detalle["tipo_cliente"] != "Titular") {
                 array_push($datos,  $detalle->Cliente);
             }
@@ -388,6 +410,7 @@ class ReservasController extends Controller
                             'estado' =>  true
                         ]
                     );
+                    $newAcompaniante["lugarSalida"] = $acompa["lugarSalida"];
                     $newAcompaniante["tipoAcompañante"] = $acompa["tipoAcompañante"];
                     array_push($listAcompaniantes, $newAcompaniante);
                 } else {
@@ -437,6 +460,7 @@ class ReservasController extends Controller
                     'reserva_id' =>  $reserva["id"],
                     'costo_tour_id' => $acompañante["tipoAcompañante"]["id"],
                     'cliente_id' => $acompañante["id"],
+                    'lugar_salida_tours_id' => $acompañante["lugarSalida"]["id"],
                     'precioDefault' =>  $acompañante["tipoAcompañante"]["aplicapago"],
                     'precio' => $acompañante["tipoAcompañante"]["precio"],
                     'observaciones' => "",

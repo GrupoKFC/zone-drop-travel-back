@@ -100,12 +100,15 @@ class ReportesController extends Controller
 
         $lugarSalidaTour = Reservas::select(
             'reservas.id',
+
             'reservas.total',
             'reservas.observaciones',
             'reservas.comisionAgencia',
             'reservas.descuento',
+            'reservas.lugar_salida_tours_id',
             'reservas.costoAdicional',
             'reservas.costoAdicionalMotivo',
+            'programacion_fechas.tour_id',
             'clientes.nombres',
             'clientes.apellidos',
             'clientes.documento',
@@ -116,6 +119,7 @@ class ReportesController extends Controller
         )
             ->join('clientes', 'clientes.id', 'reservas.cliente_id')
             // ->leftJoin('abonos', 'reservas.id', 'abonos.reserva_id')
+            ->join('programacion_fechas', 'programacion_fechas.id', 'reservas.programacion_fecha_id')
             ->where('reservas.programacion_fecha_id', $programacionFechaId)->get();
 
 
@@ -186,8 +190,31 @@ class ReportesController extends Controller
             'clientes.telefono2'
         )
             ->join('clientes', 'clientes.id', 'reservas.cliente_id')
-            ->where('reservas.programacion_fecha_id', $programacionFechaId)->get();
-        return  ["informacionTour" =>    $informacionTour,  "listadoClientes" => $lugarSalidaTour];
+            ->where('reservas.programacion_fecha_id', $programacionFechaId)
+            ->get();
+
+
+
+
+
+        $acompañantes = DetallesReservas::select(
+            'detalles_reservas.id',
+            'detalles_reservas.reserva_id',
+            'detalles_reservas.costo_tour_id',
+            'clientes.nombres',
+            'clientes.apellidos',
+            'clientes.documento',
+            'clientes.telefono1',
+            'clientes.telefono2'
+        )
+            ->join('clientes', 'clientes.id', 'detalles_reservas.cliente_id')
+            ->join('reservas', 'reservas.id', 'detalles_reservas.reserva_id')
+            ->where('reservas.programacion_fecha_id',  $programacionFechaId)
+            ->orderBy('clientes.nombres', 'asc')
+            ->get();
+
+
+        return  ["informacionTour" =>    $informacionTour,  "listadoClientes" => $acompañantes];
     }
 
 

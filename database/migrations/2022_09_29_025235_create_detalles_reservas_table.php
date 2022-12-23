@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('reserva_id')->unsigned();
             $table->integer('costo_tour_id')->unsigned();
             $table->integer('cliente_id')->unsigned();
+            // Nuevo
+            $table->integer('lugar_salida_tours_id')->nullable(); // ->unsigned();
 
             $table->boolean('precioDefault')->nullable();
             $table->float('precio')->nullable();
@@ -28,6 +30,10 @@ return new class extends Migration
             $table->foreign('reserva_id')->references('id')->on('reservas');
             $table->foreign('costo_tour_id')->references('id')->on('costo_tours');
             $table->foreign('cliente_id')->references('id')->on('clientes');
+
+            // Nuevo
+            //   $table->foreign('lugar_salida_tours_id')->references('id')->on('lugar_salida_tours');
+
             $table->timestamps();
             $table->softDeletes();
         });

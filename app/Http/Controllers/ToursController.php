@@ -102,6 +102,7 @@ class ToursController extends Controller
                     "lugar_salida_id" => $NewlugarSalida["id"],
                     "tour_id" =>  $tour->id,
                     "hora" => $lugar["hora"],
+                    "siguienteDia" => $lugar["siguienteDia"],
                     "estado" => true
                 ]);
             }
@@ -318,7 +319,9 @@ class ToursController extends Controller
                 'lugares_salidas.id as lugares_salidas_id ',
                 'lugares_salidas.descripcion',
                 'lugar_salida_tours.hora',
-                'lugar_salida_tours.estado'
+                'lugar_salida_tours.estado',
+                'lugar_salida_tours.siguienteDia'
+
             )
                 ->join('lugares_salidas', 'lugares_salidas.id', 'lugar_salida_tours.lugar_salida_id')
                 ->where('lugar_salida_tours.tour_id', $tour->id)->get();
